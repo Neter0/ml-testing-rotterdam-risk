@@ -29,4 +29,4 @@ notebook = "*"
 ipykernel = "*"
 
 [requires]
-python_version = "3.13"
+python_version = "3.11"
