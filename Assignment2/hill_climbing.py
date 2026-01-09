@@ -42,7 +42,7 @@ def compute_fitness(
         - Otherwise:
               fitness = -probability(predicted_label)
     """
-    image = preprocess_input(image_array.copy())
+    image = image_array.copy()
     batch = np.expand_dims(image, axis=0)
     predictions = model.predict(batch)[0]
     top_prediction = np.argmax(predictions)
@@ -194,6 +194,7 @@ def select_best(
             best_fitness = fitness
             best_image = m
 
+    print(f"Best fitness: {best_fitness:.4f}")
     return best_image, best_fitness
 
 # ============================================================
