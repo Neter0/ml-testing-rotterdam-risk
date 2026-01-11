@@ -45,7 +45,7 @@ def compute_fitness(
     """
     image = image_array.copy()
     batch = np.expand_dims(image, axis=0)
-    # CRITICAL: Preprocess for VGG16
+    
     batch = preprocess_input(batch)
     predictions = model.predict(batch, verbose=0)[0]
     top_prediction = np.argmax(predictions)
