@@ -1,0 +1,52 @@
+{
+    "image_name": "seashore.jpeg",
+    "target_label": "seashore",
+    "epsilon": 0.3,
+    "final_fitness": -0.9854647517204285,
+    "l_inf_distance": 0.3,
+    "baseline_predictions": [
+        {
+            "label": "seashore",
+            "prob": 0.4470943212509155
+        },
+        {
+            "label": "sandbar",
+            "prob": 0.22421897947788239
+        },
+        {
+            "label": "lakeside",
+            "prob": 0.11805765330791473
+        },
+        {
+            "label": "promontory",
+            "prob": 0.04377548396587372
+        },
+        {
+            "label": "breakwater",
+            "prob": 0.024860136210918427
+        }
+    ],
+    "adversarial_predictions": [
+        {
+            "label": "window_screen",
+            "prob": 0.9854647517204285
+        },
+        {
+            "label": "lacewing",
+            "prob": 0.00273313419893384
+        },
+        {
+            "label": "fire_screen",
+            "prob": 0.0007185727590695024
+        },
+        {
+            "label": "wolf_spider",
+            "prob": 0.0006259701331146061
+        },
+        {
+            "label": "black_widow",
+            "prob": 0.0005572863155975938
+        }
+    ],
+    "success": true
+}

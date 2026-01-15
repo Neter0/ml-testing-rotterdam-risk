@@ -1,0 +1,52 @@
+{
+    "image_name": "water_bottle.jpeg",
+    "target_label": "water jug",
+    "epsilon": 0.3,
+    "final_fitness": -0.7679604887962341,
+    "l_inf_distance": 0.3,
+    "baseline_predictions": [
+        {
+            "label": "water_bottle",
+            "prob": 0.2837383449077606
+        },
+        {
+            "label": "water_jug",
+            "prob": 0.1709943413734436
+        },
+        {
+            "label": "lotion",
+            "prob": 0.13965857028961182
+        },
+        {
+            "label": "soap_dispenser",
+            "prob": 0.10506343096494675
+        },
+        {
+            "label": "nipple",
+            "prob": 0.05903485789895058
+        }
+    ],
+    "adversarial_predictions": [
+        {
+            "label": "window_screen",
+            "prob": 0.7679604887962341
+        },
+        {
+            "label": "washbasin",
+            "prob": 0.014025975950062275
+        },
+        {
+            "label": "tub",
+            "prob": 0.0118826013058424
+        },
+        {
+            "label": "bathtub",
+            "prob": 0.010247072204947472
+        },
+        {
+            "label": "shower_curtain",
+            "prob": 0.007232644595205784
+        }
+    ],
+    "success": true
+}

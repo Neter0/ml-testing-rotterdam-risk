@@ -1,0 +1,52 @@
+{
+    "image_name": "cup.jpeg",
+    "target_label": "cup",
+    "epsilon": 0.3,
+    "final_fitness": -0.9490305185317993,
+    "l_inf_distance": 0.3,
+    "baseline_predictions": [
+        {
+            "label": "cup",
+            "prob": 0.911672055721283
+        },
+        {
+            "label": "coffee_mug",
+            "prob": 0.08454742282629013
+        },
+        {
+            "label": "teapot",
+            "prob": 0.0012018273118883371
+        },
+        {
+            "label": "pitcher",
+            "prob": 0.0010502574732527137
+        },
+        {
+            "label": "coffeepot",
+            "prob": 0.000773651001509279
+        }
+    ],
+    "adversarial_predictions": [
+        {
+            "label": "tray",
+            "prob": 0.9490305185317993
+        },
+        {
+            "label": "toilet_seat",
+            "prob": 0.0143287293612957
+        },
+        {
+            "label": "washbasin",
+            "prob": 0.008495241403579712
+        },
+        {
+            "label": "handkerchief",
+            "prob": 0.007671854924410582
+        },
+        {
+            "label": "manhole_cover",
+            "prob": 0.004133149050176144
+        }
+    ],
+    "success": true
+}

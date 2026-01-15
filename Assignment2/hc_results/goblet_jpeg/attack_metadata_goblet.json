@@ -1,0 +1,52 @@
+{
+    "image_name": "goblet.jpeg",
+    "target_label": "goblet",
+    "epsilon": 0.3,
+    "final_fitness": -0.9917156100273132,
+    "l_inf_distance": 0.3,
+    "baseline_predictions": [
+        {
+            "label": "cocktail_shaker",
+            "prob": 0.7821553945541382
+        },
+        {
+            "label": "eggnog",
+            "prob": 0.1927385777235031
+        },
+        {
+            "label": "goblet",
+            "prob": 0.013169318437576294
+        },
+        {
+            "label": "beer_glass",
+            "prob": 0.004863094072788954
+        },
+        {
+            "label": "espresso",
+            "prob": 0.0034666513092815876
+        }
+    ],
+    "adversarial_predictions": [
+        {
+            "label": "solar_dish",
+            "prob": 0.9917156100273132
+        },
+        {
+            "label": "electric_fan",
+            "prob": 0.003796806326135993
+        },
+        {
+            "label": "parachute",
+            "prob": 0.001281979028135538
+        },
+        {
+            "label": "dome",
+            "prob": 0.0009241306688636541
+        },
+        {
+            "label": "greenhouse",
+            "prob": 0.0004548034048639238
+        }
+    ],
+    "success": true
+}

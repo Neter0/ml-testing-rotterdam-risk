@@ -1,0 +1,52 @@
+{
+    "image_name": "bubble.jpeg",
+    "target_label": "bubble",
+    "epsilon": 0.3,
+    "final_fitness": -0.9637938141822815,
+    "l_inf_distance": 0.3,
+    "baseline_predictions": [
+        {
+            "label": "bubble",
+            "prob": 0.9997245669364929
+        },
+        {
+            "label": "cassette",
+            "prob": 6.943311745999381e-05
+        },
+        {
+            "label": "nipple",
+            "prob": 4.4291740778135136e-05
+        },
+        {
+            "label": "fire_engine",
+            "prob": 4.1514740587444976e-05
+        },
+        {
+            "label": "water_bottle",
+            "prob": 3.188668779330328e-05
+        }
+    ],
+    "adversarial_predictions": [
+        {
+            "label": "window_screen",
+            "prob": 0.9637938141822815
+        },
+        {
+            "label": "fire_screen",
+            "prob": 0.002105970401316881
+        },
+        {
+            "label": "wolf_spider",
+            "prob": 0.001747412490658462
+        },
+        {
+            "label": "handkerchief",
+            "prob": 0.0011060322867706418
+        },
+        {
+            "label": "pencil_box",
+            "prob": 0.0010149253066629171
+        }
+    ],
+    "success": true
+}

@@ -1,0 +1,52 @@
+{
+    "image_name": "fish.jpg",
+    "target_label": "goldfish",
+    "epsilon": 0.3,
+    "final_fitness": -0.8570516109466553,
+    "l_inf_distance": 0.3,
+    "baseline_predictions": [
+        {
+            "label": "goldfish",
+            "prob": 0.9828677177429199
+        },
+        {
+            "label": "puffer",
+            "prob": 0.010989166796207428
+        },
+        {
+            "label": "rock_beauty",
+            "prob": 0.003399573964998126
+        },
+        {
+            "label": "tench",
+            "prob": 0.0017275323625653982
+        },
+        {
+            "label": "anemone_fish",
+            "prob": 0.0007942583179101348
+        }
+    ],
+    "adversarial_predictions": [
+        {
+            "label": "window_screen",
+            "prob": 0.8570516109466553
+        },
+        {
+            "label": "handkerchief",
+            "prob": 0.029139485210180283
+        },
+        {
+            "label": "bib",
+            "prob": 0.015285109169781208
+        },
+        {
+            "label": "washbasin",
+            "prob": 0.008721145801246166
+        },
+        {
+            "label": "shower_curtain",
+            "prob": 0.008279198780655861
+        }
+    ],
+    "success": true
+}

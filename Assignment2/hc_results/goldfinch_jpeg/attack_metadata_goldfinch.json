@@ -1,0 +1,52 @@
+{
+    "image_name": "goldfinch.jpeg",
+    "target_label": "hummingbird",
+    "epsilon": 0.3,
+    "final_fitness": -0.7674812078475952,
+    "l_inf_distance": 0.3,
+    "baseline_predictions": [
+        {
+            "label": "jay",
+            "prob": 0.26247936487197876
+        },
+        {
+            "label": "hummingbird",
+            "prob": 0.24425387382507324
+        },
+        {
+            "label": "kite",
+            "prob": 0.10642033070325851
+        },
+        {
+            "label": "magpie",
+            "prob": 0.10627935081720352
+        },
+        {
+            "label": "drake",
+            "prob": 0.04429715499281883
+        }
+    ],
+    "adversarial_predictions": [
+        {
+            "label": "window_screen",
+            "prob": 0.7674812078475952
+        },
+        {
+            "label": "shovel",
+            "prob": 0.05490134283900261
+        },
+        {
+            "label": "hammerhead",
+            "prob": 0.047682106494903564
+        },
+        {
+            "label": "warplane",
+            "prob": 0.014315514825284481
+        },
+        {
+            "label": "great_white_shark",
+            "prob": 0.010331383906304836
+        }
+    ],
+    "success": true
+}
