@@ -19,7 +19,6 @@ from typing import List, Tuple
 from keras.applications import vgg16
 from keras.applications.imagenet_utils import decode_predictions
 from keras.utils import array_to_img, load_img, img_to_array
-from keras.applications.vgg16 import preprocess_input
 
 with open("data/imagenet_classes.txt") as f:
     class_labels = [line.strip() for line in f]
@@ -45,8 +44,6 @@ def compute_fitness(
     """
     image = image_array.copy()
     batch = np.expand_dims(image, axis=0)
-    
-    batch = preprocess_input(batch)
     predictions = model.predict(batch, verbose=0)[0]
     top_prediction = np.argmax(predictions)
     i = label_dictionary.get(target_label)
@@ -76,7 +73,8 @@ def mutate_seed(
         strategy = random.choice([
             'mutate_grid',
             'mutate_hexagonal_grid',
-            'mutate_crosshatch'
+            'mutate_crosshatch',
+            'mutate_diagonal_stripes'
         ])
 
         if strategy == 'mutate_diagonal_stripes':
@@ -208,7 +206,7 @@ def hill_climb(
             current_fitness = best_fitness
 
         # Check if fooled (use preprocessing for prediction)
-        batch = preprocess_input(np.expand_dims(current_image.copy(), axis=0))
+        batch = np.expand_dims(current_image.copy(), axis=0)
         predictions = model.predict(batch, verbose=0)[0]
         top_prediction = np.argmax(predictions)
         if top_prediction != label_dictionary[target_label]:
@@ -232,7 +230,7 @@ if __name__ == "__main__":
         image_list = json.load(f)
 
     # Pick target image
-    item = image_list[4] 
+    item = image_list[0]
     image_name = item["image"]
     target_label = item["label"]
     epsilon = 0.30
@@ -248,14 +246,14 @@ if __name__ == "__main__":
     print(f"Loaded: {image_name} | Target: {target_label}")
     
     # get baseline metadeta
-    preds_clean = model.predict(preprocess_input(np.expand_dims(seed, axis=0)), verbose=0)
+    preds_clean = model.predict(np.expand_dims(seed, axis=0), verbose=0)
     top_clean = decode_predictions(preds_clean, top=5)[0]
 
     # Run Attack
     final_img, final_fitness = hill_climb(seed, model, target_label, epsilon, 300)
     
     # get adversarial metadata
-    f_batch = preprocess_input(np.expand_dims(final_img.astype(np.float32), axis=0))
+    f_batch = np.expand_dims(final_img.astype(np.float32), axis=0)
     final_preds = model.predict(f_batch, verbose=0)
     top_adv = decode_predictions(final_preds, top=5)[0]
     
@@ -274,7 +272,7 @@ if __name__ == "__main__":
     axes[1].imshow(array_to_img(final_img))
     axes[1].set_title("Adversarial", fontsize=12, fontweight='bold')
     axes[1].axis('off')
-    
+
     plt.tight_layout()
     plt.savefig(os.path.join(results_dir, f"result_{image_name}"), dpi=150)
     plt.show()
@@ -295,7 +293,8 @@ if __name__ == "__main__":
         "success": top_clean[0][1] != top_adv[0][1]
     }
 
-    metadata_path = os.path.join(results_dir, "attack_metadata.json")
+    image_name_clean = image_name.split(".")[0]
+    metadata_path = os.path.join(results_dir, f"attack_metadata_{image_name_clean}.json")
     with open(metadata_path, "w") as f:
         json.dump(attack_info, f, indent=4)
 
