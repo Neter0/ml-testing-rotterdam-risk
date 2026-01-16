@@ -1,3 +1,4 @@
+import time
 import json
 import os
 import numpy as np
@@ -106,17 +107,23 @@ for entry in tqdm(items, desc="Running attacks"):
     # =====================================================
     # FGM Attack
     # =====================================================
+    start = time.perf_counter()
     x_fgm = fast_gradient_method(net, x, EPS, np.inf)
     out_fgm = net(x_fgm)
     pred_fgm, prob_fgm = parse_prediction(out_fgm, imagenet_labels)
 
     save_image(x_fgm, os.path.join(OUTDIR, f"{image_file}_fgm.png"))
+    end = time.perf_counter()
+    fgm_runtime = end - start
+    print(f"FGM runtime: {fgm_runtime:.2f} seconds")
 
     print(f"FGM prediction: {pred_fgm} ({prob_fgm:.3f})")
+
 
     # =====================================================
     # PGD Attack
     # =====================================================
+    start = time.perf_counter()
     x_pgd = projected_gradient_descent(
         net, x, EPS, PGD_STEP_SIZE, PGD_STEPS, np.inf
     )
@@ -125,6 +132,9 @@ for entry in tqdm(items, desc="Running attacks"):
     pred_pgd, prob_pgd = parse_prediction(out_pgd, imagenet_labels)
 
     save_image(x_pgd, os.path.join(OUTDIR, f"{image_file}_pgd.png"))
+    end = time.perf_counter()
+    pgd_runtime = end - start
+    print(f"PGD runtime: {pgd_runtime:.2f} seconds")
 
     print(f"PGD prediction: {pred_pgd} ({prob_pgd:.3f})")
 

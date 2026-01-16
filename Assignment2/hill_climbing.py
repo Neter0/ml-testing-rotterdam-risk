@@ -10,6 +10,7 @@ You MUST implement:
 DO NOT change function signatures.
 """
 
+import time
 import random
 import os
 import json
@@ -27,6 +28,7 @@ label_dictionary = {label: idx for idx, label in enumerate(class_labels)}
 # ============================================================
 # 1. FITNESS FUNCTION
 # ============================================================
+
 
 def compute_fitness(
     image_array: np.ndarray,
@@ -224,80 +226,100 @@ def clip_helper(original, perturbed, epsilon):
 # ============================================================
 
 if __name__ == "__main__":
-    model = vgg16.VGG16(weights="imagenet")
+    
+    # model = vgg16.VGG16(weights="imagenet")
 
     with open("data/image_labels.json") as f:
         image_list = json.load(f)
 
-    # Pick target image
-    item = image_list[0]
-    image_name = item["image"]
-    target_label = item["label"]
-    epsilon = 0.30
+    for item in image_list:
+        model = vgg16.VGG16(weights="imagenet")
 
-    # create results directory
-    results_dir = os.path.join("hc_results", image_name.replace(".", "_"))
-    if not os.path.exists(results_dir):
-        os.makedirs(results_dir)
+        # Pick target image
+        # item = image_list[0]
+        image_name = item["image"]
+        target_label = item["label"]
+        epsilon = 0.30
 
-    img = load_img(os.path.join("images", image_name), target_size=(224, 224))
-    seed = img_to_array(img).astype(np.uint8)
+        # create results directory
+        results_dir = os.path.join("hc_results", image_name.replace(".", "_"))
+        if not os.path.exists(results_dir):
+            os.makedirs(results_dir)
 
-    print(f"Loaded: {image_name} | Target: {target_label}")
-    
-    # get baseline metadeta
-    preds_clean = model.predict(np.expand_dims(seed, axis=0), verbose=0)
-    top_clean = decode_predictions(preds_clean, top=5)[0]
+        img = load_img(os.path.join("images", image_name), target_size=(224, 224))
+        seed = img_to_array(img).astype(np.uint8)
 
-    # Run Attack
-    final_img, final_fitness = hill_climb(seed, model, target_label, epsilon, 300)
-    
-    # get adversarial metadata
-    f_batch = np.expand_dims(final_img.astype(np.float32), axis=0)
-    final_preds = model.predict(f_batch, verbose=0)
-    top_adv = decode_predictions(final_preds, top=5)[0]
-    
-    # Calculate L-infinity distance
-    l_inf = float(np.max(np.abs(final_img.astype(float) - seed.astype(float))) / 255.0)
+        print(f"\n Loaded: {image_name} | Target: {target_label}\n")
 
-    # 1. Visualization
-    diff = np.abs(final_img.astype(np.float32) - seed.astype(np.float32))
-    diff_amplified = np.clip(diff * 10, 0, 255).astype(np.uint8)
+        
+        # get baseline metadeta
+        preds_clean = model.predict(np.expand_dims(seed, axis=0), verbose=0)
+        top_clean = decode_predictions(preds_clean, top=5)[0]
 
-    fig, axes = plt.subplots(1, 2, figsize=(15, 5))
-    axes[0].imshow(array_to_img(seed))
-    axes[0].set_title("Original", fontsize=12, fontweight='bold')
-    axes[0].axis('off')
-    
-    axes[1].imshow(array_to_img(final_img))
-    axes[1].set_title("Adversarial", fontsize=12, fontweight='bold')
-    axes[1].axis('off')
+        start = time.perf_counter()
+        # Run Attack
+        final_img, final_fitness = hill_climb(seed, model, target_label, epsilon, 300)
+        end = time.perf_counter()
+        hc_runtime = end - start
+        print(f"Hill Climber runtime: {hc_runtime:.2f} seconds")
 
-    plt.tight_layout()
-    plt.savefig(os.path.join(results_dir, f"result_{image_name}"), dpi=150)
-    plt.show()
+        # get adversarial metadata
+        f_batch = np.expand_dims(final_img.astype(np.float32), axis=0)
+        final_preds = model.predict(f_batch, verbose=0)
+        top_adv = decode_predictions(final_preds, top=5)[0]
+        
+        # Calculate L-infinity distance
+        l_inf = float(np.max(np.abs(final_img.astype(float) - seed.astype(float))) / 255.0)
 
-    # save metadata
-    attack_info = {
-        "image_name": image_name,
-        "target_label": target_label,
-        "epsilon": epsilon,
-        "final_fitness": float(final_fitness),
-        "l_inf_distance": l_inf,
-        "baseline_predictions": [
-            {"label": name, "prob": float(prob)} for _, name, prob in top_clean
-        ],
-        "adversarial_predictions": [
-            {"label": name, "prob": float(prob)} for _, name, prob in top_adv
-        ],
-        "success": top_clean[0][1] != top_adv[0][1]
-    }
+        # Calculate number of changed pixels and mean perturbation
+        diff = final_img != seed                    # shape (H, W, 3)
+        changed_pixels = np.sum(np.any(diff, axis=2))
 
-    image_name_clean = image_name.split(".")[0]
-    metadata_path = os.path.join(results_dir, f"attack_metadata_{image_name_clean}.json")
-    with open(metadata_path, "w") as f:
-        json.dump(attack_info, f, indent=4)
+        mean_perturbation = (np.mean(np.abs(final_img.astype(float) - seed.astype(float))) / 255.0)
 
-    print(f"\nFinal Predictions:")
-    for cl in top_adv:
-        print(cl)
+
+
+        # 1. Visualization
+        diff = np.abs(final_img.astype(np.float32) - seed.astype(np.float32))
+        diff_amplified = np.clip(diff * 10, 0, 255).astype(np.uint8)
+
+        fig, axes = plt.subplots(1, 2, figsize=(15, 5))
+        axes[0].imshow(array_to_img(seed))
+        axes[0].set_title("Original", fontsize=12, fontweight='bold')
+        axes[0].axis('off')
+        
+        axes[1].imshow(array_to_img(final_img))
+        axes[1].set_title("Adversarial", fontsize=12, fontweight='bold')
+        axes[1].axis('off')
+
+        plt.tight_layout()
+        plt.savefig(os.path.join(results_dir, f"result_{image_name}"), dpi=150)
+        plt.show()
+
+        # save metadata
+        attack_info = {
+            "image_name": image_name,
+            "target_label": target_label,
+            "epsilon": epsilon,
+            "final_fitness": float(final_fitness),
+            "l_inf_distance": l_inf,
+            "baseline_predictions": [
+                {"label": name, "prob": float(prob)} for _, name, prob in top_clean
+            ],
+            "adversarial_predictions": [
+                {"label": name, "prob": float(prob)} for _, name, prob in top_adv
+            ],
+            "success": top_clean[0][1] != top_adv[0][1]
+        }
+
+        image_name_clean = image_name.split(".")[0]
+        metadata_path = os.path.join(results_dir, f"attack_metadata_{image_name_clean}.json")
+        with open(metadata_path, "w") as f:
+            json.dump(attack_info, f, indent=2)
+
+        print(json.dumps(attack_info, indent=2))
+        print(f"\n changed pixels: {changed_pixels}")
+        print(f" mean perturbation: {mean_perturbation:.4f}")
+        print(f"\nFinal Predictions:")
+        for cl in top_adv:
+            print(cl)
