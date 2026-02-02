@@ -1,30 +1,17 @@
-# CS4015 Software engineering and testing for AI systems
+# Group A - Tests and Models for Assignment 1
 
-This folder contains the example for converting your model to onnx, using the onnx runtime.
+## Project structure
+- **`data/`**: CSV datasets used for training and evaluation.
+- **`models/`**: Exported **ONNX** models.
+  - **Group A models**: `good_model.onnx`, `bad_model.onnx` (also includes `dummy_model.onnx`)
+  - **Group B models used for comparison**: `m1.onnx`, `m2.onnx`
+- **`src/`**: Reusable Python code (helpers, tests, model wrappers, etc.) imported by the notebooks.
+- **Notebooks**
+  - **`subgroup1_training.ipynb`**: trains models and exports them to ONNX.
+  - **`subgroup1_self_testing.ipynb`**: loads **Group A** ONNX models (dummy/good/bad) and runs evaluation + tests.
+  - **`subgroup1_other_testing.ipynb`**: loads **Group B** `m1.onnx` and `m2.onnx` and runs the same evaluation + tests.
 
-#
-### <u>Pipenv</u>
+## Requirements
 
-To make life easy for everyone, we've setup a pip file to ensure quick and easy install of dependencies.
-
-<b>NOTE</b>: <i>Before installing any dependencies, open the Pipfile in your editor and un-comment the version of Tensorflow for your system.</i>
-
-Open a terminal/ powershell and navigate to the project folder, then type:
-
-    pipenv shell
-
-This will put your current session into the python virtual environment. Then type:
-
-    pipenv install
-
-This will install the dependencies defined in the Pipfile, into this specific environment. By doing this, we can ensure no cross dependency issues when working on different python projects.
-
----
-
-You will need to enable this virtual environment in your code editor to ensure it uses the correct dependencies. For VS Code, this can be found in the bottom right corner of the UI.
-
-It will currently likely show your current Python version. Click this and it will open up the 'Select Interpreter' drop down. For myself, the environment starts with <b><i>'labs'</i></b>, which I then click on to enable as my interpreter.
-
-Yours will likely be the same, or if different, will be shown in your terminal/ powershell window when you typed 'pipenv shell' before.
-
-That should have you up and running! Enjoy the labs and if you have any issues with this, please reach out to the staff and we'll do our best to get you going.
+- **Python 3.12** (recommended, see `requirements.txt`)
+- Install dependencies (from `GroupA/`):
