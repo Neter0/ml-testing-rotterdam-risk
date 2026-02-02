@@ -2,14 +2,14 @@
 
 **DSAIT4 – Testing AI Systems**
 
-This assignment extends your work on hill-climbing–based adversarial image generation by introducing standard adversarial attack baselines using the CleverHans library (FGM + PGD).
-You will compare your method against these attacks on the same set of images.
+This assignment extends our work on hill-climbing–based adversarial image generation by introducing standard adversarial attack baselines using the CleverHans library (FGM + PGD).
+We compared our method against these attacks on the same set of images.
     
 
 ## Repository Structure
 ```
 ├── baselines.py                # Provided: CleverHans FGM + PGD attacks on student images
-├── hill_climbing.py            # YOU implement and complete this file
+├── hill_climbing.py            # Our implementation
 ├── images/                     # Input images to attack
 │    ├── fish.jpg
 │    ├── castle.jpg
@@ -22,9 +22,6 @@ You will compare your method against these attacks on the same set of images.
 ```
 
 ## Installation
-
-This code has been tested with Python 3.9.21 and on MacOS (26.1) and Linux machine. 
-The use of GPU is optional as the code can work on CPU. However, the model inference time will be slower on CPU.
 
 We strongly recommend using a virtual environment (e.g., ``venv``):
 
@@ -65,30 +62,3 @@ Model prediction (clean): goldfish (0.949)  --> Original prediction (with confid
 FGM prediction: stole (0.255)               --> Prediction of the attack image by FGM (with confidence level)
 PGD prediction: Maltese dog (1.000)         --> Prediction of the attack image by PGD (with confidence level)
 ````
-
-
-## Student Task — Implement the Hill-Climbing Search
-
-The file ``hill_climbing.py`` contains an incomplete implementation. Students must complete the implementation by:
-
-* Design mutation operators for altering the pixels values 
-* Implement a fitness function measuring how close the target model (VGG16) is to make a wrong prediction
-* Implement the hill-climbing loop
-	•	Generate perturbed images
-	•	Compare against the baselines
-
-Note that the hill climber must implement a **black-box** strategies to generate adversarial: the fitness function (which is 
-guidance for the attack) should only consider the input (mutated images) and output (predicted labels with confidence 
-value). 
-
-The HC must read input exactly like the baseline:
-
-* For each image in ``data/image_labels.json``
-* Load images from ``images/``
-* Use the human label (``label`` attribute for each entry in ``image_labels.json) for correctness evaluation
-
-
-**Critical**: A successful attack is defined as any perturbation to the input image that remains within the 
-ε-bounded L∞ constraint (no pixel changes by more than ε) and causes the VGG16 model’s top-1 predicted class to change.
-
-

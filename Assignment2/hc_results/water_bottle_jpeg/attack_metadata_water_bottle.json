@@ -1,52 +1,69 @@
 {
     "image_name": "water_bottle.jpeg",
     "target_label": "water jug",
+    "target_label_index": 899,
     "epsilon": 0.3,
-    "final_fitness": -0.7679604887962341,
+    "iterations": 300,
+    "iterations_used": 1,
+    "best_fitness_iter": 1,
+    "first_success_iter": 1,
+    "final_fitness": -0.6568729281425476,
+    "time_sec": 3.73455917800311,
     "l_inf_distance": 0.3,
-    "baseline_predictions": [
+    "pixels_changed": 11760,
+    "pct_pixels_changed": 23.4375,
+    "clean_top1_index": 898,
+    "adv_top1_index": 904,
+    "success": true,
+    "last_improvement_mutation": "GRID",
+    "best_per_mutation_fitness": {
+        "GRID": -0.6568729281425476,
+        "HEX": -0.3596518933773041,
+        "CROSSHATCH": -0.18496055901050568,
+        "DIAGONAL": -0.12009163945913315
+    },
+    "baseline_predictions_top5": [
         {
             "label": "water_bottle",
-            "prob": 0.2837383449077606
+            "prob": 0.28373849391937256
         },
         {
             "label": "water_jug",
-            "prob": 0.1709943413734436
+            "prob": 0.17099425196647644
         },
         {
             "label": "lotion",
-            "prob": 0.13965857028961182
+            "prob": 0.13965851068496704
         },
         {
             "label": "soap_dispenser",
-            "prob": 0.10506343096494675
+            "prob": 0.10506348311901093
         },
         {
             "label": "nipple",
-            "prob": 0.05903485789895058
+            "prob": 0.05903477221727371
         }
     ],
-    "adversarial_predictions": [
+    "adversarial_predictions_top5": [
         {
             "label": "window_screen",
-            "prob": 0.7679604887962341
+            "prob": 0.6569296717643738
         },
         {
             "label": "washbasin",
-            "prob": 0.014025975950062275
-        },
-        {
-            "label": "tub",
-            "prob": 0.0118826013058424
-        },
-        {
-            "label": "bathtub",
-            "prob": 0.010247072204947472
+            "prob": 0.044075049459934235
         },
         {
             "label": "shower_curtain",
-            "prob": 0.007232644595205784
+            "prob": 0.0370975024998188
+        },
+        {
+            "label": "handkerchief",
+            "prob": 0.02600117027759552
+        },
+        {
+            "label": "tub",
+            "prob": 0.023053603246808052
         }
-    ],
-    "success": true
+    ]
 }

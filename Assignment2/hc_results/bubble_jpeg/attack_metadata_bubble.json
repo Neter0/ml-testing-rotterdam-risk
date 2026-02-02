@@ -1,10 +1,28 @@
 {
     "image_name": "bubble.jpeg",
     "target_label": "bubble",
+    "target_label_index": 971,
     "epsilon": 0.3,
-    "final_fitness": -0.9637938141822815,
+    "iterations": 300,
+    "iterations_used": 1,
+    "best_fitness_iter": 1,
+    "first_success_iter": 1,
+    "final_fitness": -0.9673400521278381,
+    "time_sec": 3.854636190000747,
     "l_inf_distance": 0.3,
-    "baseline_predictions": [
+    "pixels_changed": 6266,
+    "pct_pixels_changed": 12.488042091836734,
+    "clean_top1_index": 971,
+    "adv_top1_index": 807,
+    "success": true,
+    "last_improvement_mutation": "DIAGONAL",
+    "best_per_mutation_fitness": {
+        "GRID": -0.419499933719635,
+        "HEX": 0.46713197231292725,
+        "CROSSHATCH": -0.6213900446891785,
+        "DIAGONAL": -0.9673400521278381
+    },
+    "baseline_predictions_top5": [
         {
             "label": "bubble",
             "prob": 0.9997245669364929
@@ -26,27 +44,26 @@
             "prob": 3.188668779330328e-05
         }
     ],
-    "adversarial_predictions": [
+    "adversarial_predictions_top5": [
+        {
+            "label": "solar_dish",
+            "prob": 0.9673900008201599
+        },
+        {
+            "label": "spider_web",
+            "prob": 0.01171882264316082
+        },
         {
             "label": "window_screen",
-            "prob": 0.9637938141822815
+            "prob": 0.008306806907057762
         },
         {
-            "label": "fire_screen",
-            "prob": 0.002105970401316881
+            "label": "electric_fan",
+            "prob": 0.0074158357456326485
         },
         {
-            "label": "wolf_spider",
-            "prob": 0.001747412490658462
-        },
-        {
-            "label": "handkerchief",
-            "prob": 0.0011060322867706418
-        },
-        {
-            "label": "pencil_box",
-            "prob": 0.0010149253066629171
+            "label": "radiator",
+            "prob": 0.0012550114188343287
         }
-    ],
-    "success": true
+    ]
 }

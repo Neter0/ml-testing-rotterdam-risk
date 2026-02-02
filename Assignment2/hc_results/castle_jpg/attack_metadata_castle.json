@@ -1,52 +1,69 @@
 {
     "image_name": "castle.jpg",
     "target_label": "castle",
+    "target_label_index": 483,
     "epsilon": 0.3,
-    "final_fitness": -0.9568697214126587,
+    "iterations": 300,
+    "iterations_used": 1,
+    "best_fitness_iter": 1,
+    "first_success_iter": 1,
+    "final_fitness": -0.9536539316177368,
+    "time_sec": 4.00404270299623,
     "l_inf_distance": 0.3,
-    "baseline_predictions": [
+    "pixels_changed": 11760,
+    "pct_pixels_changed": 23.4375,
+    "clean_top1_index": 483,
+    "adv_top1_index": 904,
+    "success": true,
+    "last_improvement_mutation": "GRID",
+    "best_per_mutation_fitness": {
+        "GRID": -0.9536539316177368,
+        "HEX": -0.29408976435661316,
+        "CROSSHATCH": 0.670037567615509,
+        "DIAGONAL": -0.23772881925106049
+    },
+    "baseline_predictions_top5": [
         {
             "label": "castle",
-            "prob": 0.8645292520523071
+            "prob": 0.8645291924476624
         },
         {
             "label": "palace",
-            "prob": 0.10881941020488739
+            "prob": 0.1088194027543068
         },
         {
             "label": "monastery",
-            "prob": 0.009261609986424446
+            "prob": 0.0092616006731987
         },
         {
             "label": "stupa",
-            "prob": 0.00638568215072155
+            "prob": 0.006385687738656998
         },
         {
             "label": "church",
-            "prob": 0.00462443009018898
+            "prob": 0.004624429624527693
         }
     ],
-    "adversarial_predictions": [
+    "adversarial_predictions_top5": [
         {
             "label": "window_screen",
-            "prob": 0.9568697214126587
+            "prob": 0.9536550045013428
         },
         {
             "label": "handkerchief",
-            "prob": 0.02669486403465271
+            "prob": 0.006039189174771309
+        },
+        {
+            "label": "Boston_bull",
+            "prob": 0.005282755009829998
+        },
+        {
+            "label": "fire_screen",
+            "prob": 0.0030603893101215363
         },
         {
             "label": "shower_curtain",
-            "prob": 0.0018656798638403416
-        },
-        {
-            "label": "missile",
-            "prob": 0.0013243384892120957
-        },
-        {
-            "label": "warplane",
-            "prob": 0.0010127846617251635
+            "prob": 0.0016995702171698213
         }
-    ],
-    "success": true
+    ]
 }

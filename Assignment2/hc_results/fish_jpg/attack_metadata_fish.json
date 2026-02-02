@@ -1,17 +1,35 @@
 {
     "image_name": "fish.jpg",
     "target_label": "goldfish",
+    "target_label_index": 1,
     "epsilon": 0.3,
-    "final_fitness": -0.8570516109466553,
+    "iterations": 300,
+    "iterations_used": 1,
+    "best_fitness_iter": 1,
+    "first_success_iter": 1,
+    "final_fitness": -0.591620922088623,
+    "time_sec": 4.124195593998593,
     "l_inf_distance": 0.3,
-    "baseline_predictions": [
+    "pixels_changed": 9503,
+    "pct_pixels_changed": 18.939333545918366,
+    "clean_top1_index": 1,
+    "adv_top1_index": 640,
+    "success": true,
+    "last_improvement_mutation": "HEX",
+    "best_per_mutation_fitness": {
+        "GRID": 0.9718785881996155,
+        "HEX": -0.591620922088623,
+        "CROSSHATCH": -0.2829365134239197,
+        "DIAGONAL": 0.9568682312965393
+    },
+    "baseline_predictions_top5": [
         {
             "label": "goldfish",
             "prob": 0.9828677177429199
         },
         {
             "label": "puffer",
-            "prob": 0.010989166796207428
+            "prob": 0.010989146307110786
         },
         {
             "label": "rock_beauty",
@@ -23,30 +41,29 @@
         },
         {
             "label": "anemone_fish",
-            "prob": 0.0007942583179101348
+            "prob": 0.0007942613447085023
         }
     ],
-    "adversarial_predictions": [
+    "adversarial_predictions_top5": [
+        {
+            "label": "manhole_cover",
+            "prob": 0.5916421413421631
+        },
+        {
+            "label": "tray",
+            "prob": 0.1858353167772293
+        },
         {
             "label": "window_screen",
-            "prob": 0.8570516109466553
+            "prob": 0.042884089052677155
         },
         {
-            "label": "handkerchief",
-            "prob": 0.029139485210180283
+            "label": "digital_clock",
+            "prob": 0.026974789798259735
         },
         {
-            "label": "bib",
-            "prob": 0.015285109169781208
-        },
-        {
-            "label": "washbasin",
-            "prob": 0.008721145801246166
-        },
-        {
-            "label": "shower_curtain",
-            "prob": 0.008279198780655861
+            "label": "doormat",
+            "prob": 0.01159112248569727
         }
-    ],
-    "success": true
+    ]
 }

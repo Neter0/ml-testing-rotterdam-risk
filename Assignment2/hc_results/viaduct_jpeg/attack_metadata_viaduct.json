@@ -1,10 +1,28 @@
 {
     "image_name": "viaduct.jpeg",
     "target_label": "viaduct",
+    "target_label_index": 888,
     "epsilon": 0.3,
-    "final_fitness": -0.8218908905982971,
+    "iterations": 300,
+    "iterations_used": 1,
+    "best_fitness_iter": 1,
+    "first_success_iter": 1,
+    "final_fitness": -0.7286272048950195,
+    "time_sec": 3.378511514994898,
     "l_inf_distance": 0.3,
-    "baseline_predictions": [
+    "pixels_changed": 11760,
+    "pct_pixels_changed": 23.4375,
+    "clean_top1_index": 888,
+    "adv_top1_index": 904,
+    "success": true,
+    "last_improvement_mutation": "GRID",
+    "best_per_mutation_fitness": {
+        "GRID": -0.7286272048950195,
+        "HEX": -0.28790202736854553,
+        "CROSSHATCH": 0.16568076610565186,
+        "DIAGONAL": -0.1787579357624054
+    },
+    "baseline_predictions_top5": [
         {
             "label": "viaduct",
             "prob": 0.9991100430488586
@@ -15,38 +33,37 @@
         },
         {
             "label": "suspension_bridge",
-            "prob": 0.00010233592183794826
+            "prob": 0.00010233611828880385
         },
         {
             "label": "dam",
-            "prob": 1.1579576494114008e-05
+            "prob": 1.157959832198685e-05
         },
         {
             "label": "steel_arch_bridge",
             "prob": 9.389560545969289e-06
         }
     ],
-    "adversarial_predictions": [
+    "adversarial_predictions_top5": [
         {
             "label": "window_screen",
-            "prob": 0.8218908905982971
-        },
-        {
-            "label": "candle",
-            "prob": 0.017842570319771767
-        },
-        {
-            "label": "lighter",
-            "prob": 0.017681565135717392
+            "prob": 0.7306962609291077
         },
         {
             "label": "fire_screen",
-            "prob": 0.013912070542573929
+            "prob": 0.04460679739713669
         },
         {
-            "label": "washbasin",
-            "prob": 0.006440951954573393
+            "label": "candle",
+            "prob": 0.02361219935119152
+        },
+        {
+            "label": "space_shuttle",
+            "prob": 0.013846599496901035
+        },
+        {
+            "label": "missile",
+            "prob": 0.012810378335416317
         }
-    ],
-    "success": true
+    ]
 }

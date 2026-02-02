@@ -1,52 +1,69 @@
 {
     "image_name": "seashore.jpeg",
     "target_label": "seashore",
+    "target_label_index": 978,
     "epsilon": 0.3,
-    "final_fitness": -0.9854647517204285,
+    "iterations": 300,
+    "iterations_used": 1,
+    "best_fitness_iter": 1,
+    "first_success_iter": 1,
+    "final_fitness": -0.9848609566688538,
+    "time_sec": 3.7461875389999477,
     "l_inf_distance": 0.3,
-    "baseline_predictions": [
+    "pixels_changed": 11760,
+    "pct_pixels_changed": 23.4375,
+    "clean_top1_index": 978,
+    "adv_top1_index": 904,
+    "success": true,
+    "last_improvement_mutation": "GRID",
+    "best_per_mutation_fitness": {
+        "GRID": -0.9848609566688538,
+        "HEX": -0.9621312022209167,
+        "CROSSHATCH": -0.12893450260162354,
+        "DIAGONAL": -0.3245227336883545
+    },
+    "baseline_predictions_top5": [
         {
             "label": "seashore",
-            "prob": 0.4470943212509155
+            "prob": 0.44709402322769165
         },
         {
             "label": "sandbar",
-            "prob": 0.22421897947788239
+            "prob": 0.22421926259994507
         },
         {
             "label": "lakeside",
-            "prob": 0.11805765330791473
+            "prob": 0.11805757880210876
         },
         {
             "label": "promontory",
-            "prob": 0.04377548396587372
+            "prob": 0.043775495141744614
         },
         {
             "label": "breakwater",
-            "prob": 0.024860136210918427
+            "prob": 0.02486013062298298
         }
     ],
-    "adversarial_predictions": [
+    "adversarial_predictions_top5": [
         {
             "label": "window_screen",
-            "prob": 0.9854647517204285
+            "prob": 0.984863817691803
         },
         {
             "label": "lacewing",
-            "prob": 0.00273313419893384
+            "prob": 0.0029127111192792654
         },
         {
             "label": "fire_screen",
-            "prob": 0.0007185727590695024
+            "prob": 0.0007563597755506635
         },
         {
             "label": "wolf_spider",
-            "prob": 0.0006259701331146061
+            "prob": 0.000634716241620481
         },
         {
-            "label": "black_widow",
-            "prob": 0.0005572863155975938
+            "label": "handkerchief",
+            "prob": 0.0005840156809426844
         }
-    ],
-    "success": true
+    ]
 }

@@ -1,10 +1,28 @@
 {
     "image_name": "goldfinch.jpeg",
     "target_label": "hummingbird",
+    "target_label_index": 94,
     "epsilon": 0.3,
-    "final_fitness": -0.7674812078475952,
+    "iterations": 300,
+    "iterations_used": 1,
+    "best_fitness_iter": 1,
+    "first_success_iter": 1,
+    "final_fitness": -0.7010595798492432,
+    "time_sec": 4.038983487000223,
     "l_inf_distance": 0.3,
-    "baseline_predictions": [
+    "pixels_changed": 11650,
+    "pct_pixels_changed": 23.218271683673468,
+    "clean_top1_index": 17,
+    "adv_top1_index": 904,
+    "success": true,
+    "last_improvement_mutation": "GRID",
+    "best_per_mutation_fitness": {
+        "GRID": -0.7010595798492432,
+        "HEX": -0.20878948271274567,
+        "CROSSHATCH": -0.345179945230484,
+        "DIAGONAL": -0.45014771819114685
+    },
+    "baseline_predictions_top5": [
         {
             "label": "jay",
             "prob": 0.26247936487197876
@@ -19,34 +37,33 @@
         },
         {
             "label": "magpie",
-            "prob": 0.10627935081720352
+            "prob": 0.10627945512533188
         },
         {
             "label": "drake",
-            "prob": 0.04429715499281883
+            "prob": 0.04429711773991585
         }
     ],
-    "adversarial_predictions": [
+    "adversarial_predictions_top5": [
         {
             "label": "window_screen",
-            "prob": 0.7674812078475952
+            "prob": 0.7011906504631042
         },
         {
             "label": "shovel",
-            "prob": 0.05490134283900261
+            "prob": 0.13822558522224426
         },
         {
             "label": "hammerhead",
-            "prob": 0.047682106494903564
+            "prob": 0.01547770295292139
         },
         {
             "label": "warplane",
-            "prob": 0.014315514825284481
+            "prob": 0.008067750371992588
         },
         {
             "label": "great_white_shark",
-            "prob": 0.010331383906304836
+            "prob": 0.00645013153553009
         }
-    ],
-    "success": true
+    ]
 }

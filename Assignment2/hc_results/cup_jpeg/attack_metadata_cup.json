@@ -1,10 +1,28 @@
 {
     "image_name": "cup.jpeg",
     "target_label": "cup",
+    "target_label_index": 968,
     "epsilon": 0.3,
-    "final_fitness": -0.9490305185317993,
-    "l_inf_distance": 0.3,
-    "baseline_predictions": [
+    "iterations": 300,
+    "iterations_used": 1,
+    "best_fitness_iter": 1,
+    "first_success_iter": 1,
+    "final_fitness": -0.9706559181213379,
+    "time_sec": 3.652009113000531,
+    "l_inf_distance": 0.14901960784313725,
+    "pixels_changed": 9526,
+    "pct_pixels_changed": 18.985172193877553,
+    "clean_top1_index": 968,
+    "adv_top1_index": 868,
+    "success": true,
+    "last_improvement_mutation": "HEX",
+    "best_per_mutation_fitness": {
+        "GRID": -0.6251471042633057,
+        "HEX": -0.9706559181213379,
+        "CROSSHATCH": 0.8676436543464661,
+        "DIAGONAL": -0.5468140244483948
+    },
+    "baseline_predictions_top5": [
         {
             "label": "cup",
             "prob": 0.911672055721283
@@ -23,30 +41,29 @@
         },
         {
             "label": "coffeepot",
-            "prob": 0.000773651001509279
+            "prob": 0.0007736525149084628
         }
     ],
-    "adversarial_predictions": [
+    "adversarial_predictions_top5": [
         {
             "label": "tray",
-            "prob": 0.9490305185317993
+            "prob": 0.9708303213119507
         },
         {
             "label": "toilet_seat",
-            "prob": 0.0143287293612957
+            "prob": 0.011429286561906338
         },
         {
             "label": "washbasin",
-            "prob": 0.008495241403579712
+            "prob": 0.0071380361914634705
         },
         {
-            "label": "handkerchief",
-            "prob": 0.007671854924410582
+            "label": "toilet_tissue",
+            "prob": 0.002905837958678603
         },
         {
-            "label": "manhole_cover",
-            "prob": 0.004133149050176144
+            "label": "bathtub",
+            "prob": 0.001428453135304153
         }
-    ],
-    "success": true
+    ]
 }

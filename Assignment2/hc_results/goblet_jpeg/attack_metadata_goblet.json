@@ -1,10 +1,28 @@
 {
     "image_name": "goblet.jpeg",
     "target_label": "goblet",
+    "target_label_index": 572,
     "epsilon": 0.3,
-    "final_fitness": -0.9917156100273132,
-    "l_inf_distance": 0.3,
-    "baseline_predictions": [
+    "iterations": 300,
+    "iterations_used": 1,
+    "best_fitness_iter": 1,
+    "first_success_iter": 1,
+    "final_fitness": -0.8441113829612732,
+    "time_sec": 3.7160001960000955,
+    "l_inf_distance": 0.03137254901960784,
+    "pixels_changed": 11760,
+    "pct_pixels_changed": 23.4375,
+    "clean_top1_index": 503,
+    "adv_top1_index": 503,
+    "success": true,
+    "last_improvement_mutation": "GRID",
+    "best_per_mutation_fitness": {
+        "GRID": -0.8441113829612732,
+        "HEX": -0.8372184038162231,
+        "CROSSHATCH": -0.3124391436576843,
+        "DIAGONAL": -0.6200735569000244
+    },
+    "baseline_predictions_top5": [
         {
             "label": "cocktail_shaker",
             "prob": 0.7821553945541382
@@ -26,27 +44,26 @@
             "prob": 0.0034666513092815876
         }
     ],
-    "adversarial_predictions": [
+    "adversarial_predictions_top5": [
         {
-            "label": "solar_dish",
-            "prob": 0.9917156100273132
+            "label": "cocktail_shaker",
+            "prob": 0.8599073886871338
         },
         {
-            "label": "electric_fan",
-            "prob": 0.003796806326135993
+            "label": "eggnog",
+            "prob": 0.11979798227548599
         },
         {
-            "label": "parachute",
-            "prob": 0.001281979028135538
+            "label": "goblet",
+            "prob": 0.015795990824699402
         },
         {
-            "label": "dome",
-            "prob": 0.0009241306688636541
+            "label": "beer_glass",
+            "prob": 0.001993515295907855
         },
         {
-            "label": "greenhouse",
-            "prob": 0.0004548034048639238
+            "label": "cup",
+            "prob": 0.0011501681292429566
         }
-    ],
-    "success": true
+    ]
 }
