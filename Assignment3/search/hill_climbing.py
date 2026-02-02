@@ -326,6 +326,9 @@ def hill_climb(
     # Track all fitness values for comparison
     all_fitness_values = []
     first_crash_evaluation = None
+    
+    # Track ALL evaluated scenarios for pattern analysis (Section 2.4)
+    all_scenarios_evaluated = []
 
     # Start from random initial configuration
     current_cfg = sample_random_config(base_cfg, param_spec, rng)
@@ -339,6 +342,16 @@ def hill_climb(
 
     cur_fit = compute_fitness(obj)
     all_fitness_values.append(cur_fit)
+    
+    # Store initial scenario
+    all_scenarios_evaluated.append({
+        "config": copy.deepcopy(current_cfg),
+        "objectives": dict(obj),
+        "fitness": cur_fit,
+        "seed": seed_base,
+        "crashed": crashed,
+        "evaluation_number": 1
+    })
 
     print("\n")
     print(f"Initial fitness: {cur_fit}")
@@ -368,18 +381,22 @@ def hill_climb(
         stats["crashes_found"] = 1
         stats["crash_iteration"] = 0
         stats["crash_scenarios"].append({
-            "config": copy.deepcopy(current_cfg), 
-            "objectives": dict(obj), 
+            "config": copy.deepcopy(current_cfg),
+            "objectives": dict(obj),
             "seed": seed_base,
             "evaluation_number": evaluations
         })
         first_crash_evaluation = evaluations
         end_time = time.time()
         
+        # Analyze patterns before returning
+        pattern_analysis = analyze_patterns(all_scenarios_evaluated)
+        
         return generate_return_dict(
             best_cfg, best_obj, best_fit, best_seed_base, best_ts,
             history, evaluations, stats, start_time, end_time,
-            all_fitness_values, first_crash_evaluation, best_non_crash
+            all_fitness_values, first_crash_evaluation, best_non_crash,
+            all_scenarios_evaluated, pattern_analysis
         )
 
     # Random restart logic
@@ -401,6 +418,17 @@ def hill_climb(
             current_fit = compute_fitness(obj)
             all_fitness_values.append(current_fit)
             evaluations += 1
+            
+            # Store restart scenario
+            all_scenarios_evaluated.append({
+                "config": copy.deepcopy(current_cfg),
+                "objectives": dict(obj),
+                "fitness": current_fit,
+                "seed": seed_base,
+                "crashed": crashed,
+                "evaluation_number": evaluations
+            })
+            
             no_improvement_count = 0
 
         best_neighbor_cfg = None
@@ -420,6 +448,16 @@ def hill_climb(
             x_fit = float(compute_fitness(x_obj))
             all_fitness_values.append(x_fit)
             evaluations += 1
+            
+            # Store ALL evaluated scenarios
+            all_scenarios_evaluated.append({
+                "config": copy.deepcopy(x_cfg),
+                "objectives": dict(x_obj),
+                "fitness": x_fit,
+                "seed": x_seed_base,
+                "crashed": x_crashed,
+                "evaluation_number": evaluations
+            })
 
             if x_fit < best_neighbor_fit:
                 best_neighbor_fit = x_fit
@@ -437,17 +475,21 @@ def hill_climb(
                 if first_crash_evaluation is None:
                     first_crash_evaluation = evaluations
                 stats["crash_scenarios"].append({
-                    "config": copy.deepcopy(x_cfg), 
-                    "objectives": dict(x_obj), 
+                    "config": copy.deepcopy(x_cfg),
+                    "objectives": dict(x_obj),
                     "seed": x_seed_base,
                     "evaluation_number": evaluations
                 })
                 end_time = time.time()
                 
+                # Analyze patterns before returning
+                pattern_analysis = analyze_patterns(all_scenarios_evaluated)
+                
                 return generate_return_dict(
                     copy.deepcopy(x_cfg), dict(x_obj), float(x_fit), int(x_seed_base), x_ts,
                     history + [float(x_fit)], evaluations, stats, start_time, end_time,
-                    all_fitness_values, first_crash_evaluation, best_non_crash
+                    all_fitness_values, first_crash_evaluation, best_non_crash,
+                    all_scenarios_evaluated, pattern_analysis
                 )
 
         # Track best non-crash
@@ -486,47 +528,117 @@ def hill_climb(
     print(f"\nFinal best fitness: {best_fit}")
     end_time = time.time()
     
+    # Analyze patterns at the end
+    pattern_analysis = analyze_patterns(all_scenarios_evaluated)
+    
     return generate_return_dict(
         best_cfg, best_obj, best_fit, best_seed_base, best_ts,
         history, evaluations, stats, start_time, end_time,
-        all_fitness_values, first_crash_evaluation, best_non_crash
+        all_fitness_values, first_crash_evaluation, best_non_crash,
+        all_scenarios_evaluated, pattern_analysis
     )
+
+
+def analyze_patterns(all_scenarios):
+    """Analyze patterns in crash vs non-crash scenarios (Section 2.4)"""
+    crash_scenarios = [s for s in all_scenarios if s["crashed"]]
+    non_crash_scenarios = [s for s in all_scenarios if not s["crashed"]]
+    
+    def compute_pattern_stats(scenarios):
+        if not scenarios:
+            return None
+        
+        configs = [s["config"] for s in scenarios]
+        vehicles = [c.get("vehicles_count") for c in configs]
+        lanes = [c.get("lanes_count") for c in configs]
+        spacings = [c.get("initial_spacing") for c in configs]
+        ego_spacings = [c.get("ego_spacing") for c in configs]
+        lane_ids = [c.get("initial_lane_id") for c in configs]
+        distances = [s["objectives"]["min_distance"] for s in scenarios if s["objectives"]["min_distance"] != float('inf')]
+        
+        from collections import Counter
+        lane_counter = Counter(lane_ids)
+        
+        return {
+            "count": len(scenarios),
+            "avg_vehicles_count": np.mean(vehicles),
+            "avg_lanes_count": np.mean(lanes),
+            "avg_initial_spacing": np.mean(spacings),
+            "avg_ego_spacing": np.mean(ego_spacings),
+            "vehicles_range": [min(vehicles), max(vehicles)],
+            "spacing_range": [min(spacings), max(spacings)],
+            "ego_spacing_range": [min(ego_spacings), max(ego_spacings)],
+            "most_common_lanes": lane_counter.most_common(3),
+            "avg_min_distance": np.mean(distances) if distances else float('inf'),
+            "min_distance_range": [min(distances), max(distances)] if distances else [float('inf'), float('inf')]
+        }
+    
+    return {
+        "crash_patterns": compute_pattern_stats(crash_scenarios),
+        "non_crash_patterns": compute_pattern_stats(non_crash_scenarios),
+        "total_scenarios": len(all_scenarios)
+    }
 
 
 def generate_return_dict(best_cfg, best_obj, best_fit, best_seed_base, best_ts,
                         history, evaluations, stats, start_time, end_time,
-                        all_fitness_values, first_crash_evaluation, best_non_crash):
+                        all_fitness_values, first_crash_evaluation, best_non_crash,
+                        all_scenarios_evaluated, pattern_analysis):
     """Generate standardized return dictionary with all comparison metrics."""
     runtime = end_time - start_time
     
-    print_metrics_summary(stats, evaluations, start_time, end_time, best_obj, best_cfg)
+    print_metrics_summary(stats, evaluations, start_time, end_time, best_obj, best_cfg, pattern_analysis)
     
     return {
-        # Failure Discovery
+        # Failure Discovery (Section 2.1)
         "collision_found": stats["crashes_found"] > 0,
         "num_crashes": stats["crashes_found"],
         "min_distance_achieved": best_obj.get("min_distance", float('inf')),
+        "distinct_failing_scenarios": stats["crash_scenarios"],
         
-        # Best scenario
+        # Best scenario (Section 2.2)
         "best_cfg": best_cfg,
         "best_objectives": best_obj,
         "best_fitness": best_fit,
         "best_seed": best_seed_base,
         "best_time_series": best_ts,
+        "most_critical_scenario": {
+            "config": best_cfg,
+            "objectives": best_obj,
+            "seed": best_seed_base,
+            "fitness": best_fit
+        },
         
-        # All crashes
+        # All crashes (Section 2.2)
         "crash_scenarios": stats["crash_scenarios"],
         "best_non_crash": best_non_crash if stats["crashes_found"] == 0 else None,
         
-        # Efficiency
+        # Efficiency (Section 2.3)
         "runtime_seconds": runtime,
         "total_evaluations": evaluations,
         "evaluations_to_first_crash": first_crash_evaluation,
         "evaluations_per_second": evaluations / runtime if runtime > 0 else 0,
         
-        # Convergence
+        # Qualitative observations (Section 2.4)
+        "pattern_analysis": pattern_analysis,
+        "all_scenarios_evaluated": all_scenarios_evaluated,
+        
+        # Convergence (Section 2.4)
         "best_fitness_history": history,
         "all_fitness_values": all_fitness_values,
+        "convergence_data": {
+            "fitness_per_evaluation": all_fitness_values,
+            "best_fitness_progression": history,
+            "distance_progression": [s["objectives"]["min_distance"] for s in all_scenarios_evaluated]
+        },
+        
+        # Exploration metrics (Section 2.5)
+        "exploration_metrics": {
+            "acceptances": stats["acceptances"],
+            "rejections": stats["rejections"],
+            "restarts": stats["restarts"],
+            "acceptance_rate": stats["acceptances"] / (stats["acceptances"] + stats["rejections"]) * 100 if (stats["acceptances"] + stats["rejections"]) > 0 else 0
+        },
         
         # Method-specific
         "method": "Hill Climbing",
@@ -545,14 +657,14 @@ def generate_return_dict(best_cfg, best_obj, best_fit, best_seed_base, best_ts,
     }
 
 
-def print_metrics_summary(stats, evaluations, start_time, end_time, best_obj, best_cfg):
+def print_metrics_summary(stats, evaluations, start_time, end_time, best_obj, best_cfg, pattern_analysis):
     """Print comprehensive search metrics."""
     runtime = end_time - start_time
     print("\n" + "="*80)
     print("HILL CLIMBING METRICS SUMMARY")
     print("="*80)
 
-    # Failure discovery
+    # Failure discovery (Section 2.1)
     print("\n[1] FAILURE DISCOVERY:")
     print(f"   • Collision found: {'YES' if stats['crashes_found'] > 0 else 'NO'}")
     print(f"   • Number of crashes: {stats['crashes_found']}")
@@ -560,7 +672,7 @@ def print_metrics_summary(stats, evaluations, start_time, end_time, best_obj, be
         print(f"   • First crash at iteration: {stats['crash_iteration']}")
     print(f"   • Minimum distance achieved: {best_obj.get('min_distance', float('inf')):.2f}m")
 
-    # Scenario characteristics
+    # Scenario characteristics (Section 2.2)
     print("\n[2] SCENARIO CHARACTERISTICS:")
     if stats['crash_scenarios']:
         print(f"   • Critical scenario configuration:")
@@ -579,7 +691,7 @@ def print_metrics_summary(stats, evaluations, start_time, end_time, best_obj, be
         print(f"     - ego_spacing: {best_cfg.get('ego_spacing'):.2f}")
         print(f"     - initial_lane_id: {best_cfg.get('initial_lane_id')}")
 
-    # Efficiency
+    # Efficiency (Section 2.3)
     print("\n[3] EFFICIENCY:")
     print(f"   • Runtime: {runtime:.2f} seconds ({runtime/60:.2f} minutes)")
     print(f"   • Total scenario evaluations: {evaluations}")
@@ -588,7 +700,7 @@ def print_metrics_summary(stats, evaluations, start_time, end_time, best_obj, be
         evals_to_crash = sum([1 + i * 10 for i in range(stats['crash_iteration'])])
         print(f"   • Evaluations to reach crash: ~{evals_to_crash}")
 
-    # Search effectiveness
+    # Search effectiveness (Section 2.5)
     total_decisions = stats['acceptances'] + stats['rejections']
     if total_decisions > 0:
         acceptance_rate = 100 * stats['acceptances'] / total_decisions
@@ -597,12 +709,30 @@ def print_metrics_summary(stats, evaluations, start_time, end_time, best_obj, be
         print(f"   • Rejections: {stats['rejections']}")
         print(f"   • Random restarts: {stats['restarts']}")
 
-    # Objective breakdown
+    # Objective breakdown (Section 2.2)
     print("\n[5] OBJECTIVE METRICS:")
     print(f"   • Min distance: {best_obj.get('min_distance', float('inf')):.2f}m")
     print(f"   • Same-lane min distance: {best_obj.get('same_lane_min_distance', float('inf')):.2f}m")
     print(f"   • Min closing distance: {best_obj.get('min_closing_distance', float('inf')):.2f}m")
     print(f"   • Min TTC: {best_obj.get('min_ttc', float('inf')):.2f} timesteps")
+
+    # Pattern analysis (Section 2.4)
+    print("\n[6] PATTERN ANALYSIS:")
+    if pattern_analysis["crash_patterns"]:
+        cp = pattern_analysis["crash_patterns"]
+        print(f"   • Crash scenarios ({cp['count']} total):")
+        print(f"     - Avg vehicles: {cp['avg_vehicles_count']:.1f} (range: {cp['vehicles_range'][0]}-{cp['vehicles_range'][1]})")
+        print(f"     - Avg spacing: {cp['avg_initial_spacing']:.2f} (range: {cp['spacing_range'][0]:.2f}-{cp['spacing_range'][1]:.2f})")
+        print(f"     - Avg ego spacing: {cp['avg_ego_spacing']:.2f} (range: {cp['ego_spacing_range'][0]:.2f}-{cp['ego_spacing_range'][1]:.2f})")
+        print(f"     - Most common lanes: {cp['most_common_lanes']}")
+    
+    if pattern_analysis["non_crash_patterns"]:
+        ncp = pattern_analysis["non_crash_patterns"]
+        print(f"   • Non-crash scenarios ({ncp['count']} total):")
+        print(f"     - Avg vehicles: {ncp['avg_vehicles_count']:.1f} (range: {ncp['vehicles_range'][0]}-{ncp['vehicles_range'][1]})")
+        print(f"     - Avg spacing: {ncp['avg_initial_spacing']:.2f} (range: {ncp['spacing_range'][0]:.2f}-{ncp['spacing_range'][1]:.2f})")
+        print(f"     - Avg ego spacing: {ncp['avg_ego_spacing']:.2f} (range: {ncp['ego_spacing_range'][0]:.2f}-{ncp['ego_spacing_range'][1]:.2f})")
+        print(f"     - Avg min distance: {ncp['avg_min_distance']:.2f}m")
 
     print("="*80 + "\n")
 

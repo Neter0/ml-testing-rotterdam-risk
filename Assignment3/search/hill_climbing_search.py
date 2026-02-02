@@ -8,9 +8,9 @@ from envs.highway_env_utils import record_video_episode
 class HillClimbingSearch(ScenarioSearch):
     def run_search(
         self,
-        n_scenarios = 50,
+        n_scenarios = 10,
         seed = 0,
-        iterations = 100,
+        iterations = 20,
         neighbors_per_iteration = 10,
     ):
         rng = np.random.default_rng(seed)
