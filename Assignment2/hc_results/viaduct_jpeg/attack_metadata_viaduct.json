@@ -1,0 +1,52 @@
+{
+    "image_name": "viaduct.jpeg",
+    "target_label": "viaduct",
+    "epsilon": 0.3,
+    "final_fitness": -0.8218908905982971,
+    "l_inf_distance": 0.3,
+    "baseline_predictions": [
+        {
+            "label": "viaduct",
+            "prob": 0.9991100430488586
+        },
+        {
+            "label": "pier",
+            "prob": 0.0007651231135241687
+        },
+        {
+            "label": "suspension_bridge",
+            "prob": 0.00010233592183794826
+        },
+        {
+            "label": "dam",
+            "prob": 1.1579576494114008e-05
+        },
+        {
+            "label": "steel_arch_bridge",
+            "prob": 9.389560545969289e-06
+        }
+    ],
+    "adversarial_predictions": [
+        {
+            "label": "window_screen",
+            "prob": 0.8218908905982971
+        },
+        {
+            "label": "candle",
+            "prob": 0.017842570319771767
+        },
+        {
+            "label": "lighter",
+            "prob": 0.017681565135717392
+        },
+        {
+            "label": "fire_screen",
+            "prob": 0.013912070542573929
+        },
+        {
+            "label": "washbasin",
+            "prob": 0.006440951954573393
+        }
+    ],
+    "success": true
+}

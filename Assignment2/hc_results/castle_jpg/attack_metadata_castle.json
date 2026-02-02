@@ -1,0 +1,52 @@
+{
+    "image_name": "castle.jpg",
+    "target_label": "castle",
+    "epsilon": 0.3,
+    "final_fitness": -0.9568697214126587,
+    "l_inf_distance": 0.3,
+    "baseline_predictions": [
+        {
+            "label": "castle",
+            "prob": 0.8645292520523071
+        },
+        {
+            "label": "palace",
+            "prob": 0.10881941020488739
+        },
+        {
+            "label": "monastery",
+            "prob": 0.009261609986424446
+        },
+        {
+            "label": "stupa",
+            "prob": 0.00638568215072155
+        },
+        {
+            "label": "church",
+            "prob": 0.00462443009018898
+        }
+    ],
+    "adversarial_predictions": [
+        {
+            "label": "window_screen",
+            "prob": 0.9568697214126587
+        },
+        {
+            "label": "handkerchief",
+            "prob": 0.02669486403465271
+        },
+        {
+            "label": "shower_curtain",
+            "prob": 0.0018656798638403416
+        },
+        {
+            "label": "missile",
+            "prob": 0.0013243384892120957
+        },
+        {
+            "label": "warplane",
+            "prob": 0.0010127846617251635
+        }
+    ],
+    "success": true
+}

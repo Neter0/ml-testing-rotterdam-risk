@@ -1,0 +1,52 @@
+{
+    "image_name": "hay.jpeg",
+    "target_label": "hay",
+    "epsilon": 0.3,
+    "final_fitness": -0.9642922878265381,
+    "l_inf_distance": 0.3,
+    "baseline_predictions": [
+        {
+            "label": "hay",
+            "prob": 0.9700146317481995
+        },
+        {
+            "label": "thatch",
+            "prob": 0.0033027955796569586
+        },
+        {
+            "label": "dam",
+            "prob": 0.003199744736775756
+        },
+        {
+            "label": "broom",
+            "prob": 0.0019680801779031754
+        },
+        {
+            "label": "brown_bear",
+            "prob": 0.0015481698792427778
+        }
+    ],
+    "adversarial_predictions": [
+        {
+            "label": "window_screen",
+            "prob": 0.9642922878265381
+        },
+        {
+            "label": "lacewing",
+            "prob": 0.001795613905414939
+        },
+        {
+            "label": "strainer",
+            "prob": 0.0016114362515509129
+        },
+        {
+            "label": "honeycomb",
+            "prob": 0.0014505155850201845
+        },
+        {
+            "label": "fire_screen",
+            "prob": 0.0013184327399358153
+        }
+    ],
+    "success": true
+}
