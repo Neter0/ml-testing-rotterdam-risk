@@ -65,8 +65,19 @@ def compute_fitness(
         # fallback if GT label is missing from mapping
         return float(np.max(predictions))
 
-    return float(predictions[i])
+    # probabilities of ground truth and best incorrect label
+    gt_probs = predictions[i]
 
+    # get probability of the most likely incorrect label
+    masked_probs = predictions.copy()
+    masked_probs[i] = -np.inf  # Mask the correct class
+    best_wrong_idx = np.argmax(masked_probs)
+    best_wrong_prob = masked_probs[best_wrong_idx]
+    # combine both into a fitness score
+    fitness = float(gt_probs - best_wrong_prob)
+
+    #print(f"DEBUG: GT prob={gt_probs:.6f}, best wrong prob={best_wrong_prob:.6f}, fitness={fitness:.6f}")
+    return fitness
 
 # ============================================================
 # 2. MUTATION FUNCTION
